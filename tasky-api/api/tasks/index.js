@@ -30,6 +30,11 @@ router.post('/', (req, res) => {
         done,
         priority
     };
+
+    const timestamp = new Date().toISOString();
+    newTask.created_at = timestamp;
+    newTask.updated_at = timestamp;
+
     tasksData.tasks.push(newTask);
     res.status(201).json(newTask); // 201 Successfully created new resource (POST/PUT)
     tasksData.total_results++;
@@ -46,6 +51,7 @@ router.put('/:id', (req, res) => {
     /* An updated task is created using the request body (using the spread operator ...)
     The existing task properties are pulled in, then the properties coming from the req.body (overwrite), then the id (overwrite, safeguard) */
     const updatedTask = { ...tasksData.tasks[taskIndex], ...req.body, id:id };
+    updatedTask.updated_at = new Date().toISOString();
     tasksData.tasks[taskIndex] = updatedTask; // The original task is replaced with the updated version; and the updated version is returned as confirmation of a successful update.
     res.json(updatedTask);
 });
