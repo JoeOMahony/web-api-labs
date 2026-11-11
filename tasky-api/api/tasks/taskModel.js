@@ -4,14 +4,20 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const TaskSchema = new Schema({
-  title:  String,
+  title:  {type: String,  required: true},
   description:  String ,
   deadline: Date,
   done: Boolean,
-  priority: {type: String, enum: ["Low","Medium","High"]},
+  priority: {type: String, enum: ["Low","Medium","High"], required: true},
   created_at: Date,
   updated_at: Date
 });
+
+// custom validator that returns true if the deadline is greater than today’s date and time.
+const dateValidator = (date) => {
+  return date > new Date();
+};
+TaskSchema.path("deadline").validate(dateValidator);
 
 // associates the schema instance with a database collection named ‘Task’
 export default mongoose.model('Task', TaskSchema); // returns a model object, which has special methods for querying and manipulating the associated collection,
