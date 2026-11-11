@@ -1,0 +1,104 @@
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import AddTaskIcon from '@mui/icons-material/AddTask';
+
+const AddTaskForm = (props) => {
+
+    return (
+        <div>
+            <Box
+                component="form"
+                sx={{
+                    '& .MuiOutlinedInput-root': { m: 1, width: '30ch' },
+                }}
+                onSubmit={props.submit}
+            >
+                <div>
+                    <TextField
+                        required
+                        id="outline-required"
+                        name="title"
+                        label="Task Title"
+                        slotProps={{ inputLabels: { shrink: true } }}
+                        onChange={(event) => props.change(event)}
+                    />
+                </div>
+                <div>
+                    <TextField
+                        required
+                        name="deadline"
+                        label="Deadline"
+                        slotProps={{ inputLabel: { shrink: true } }}
+                        type="date"
+                        onChange={(event) => props.change(event)}
+                    />
+                </div>
+                <div>
+                    <TextField
+                        name="description"
+                        id="outlined-multiline-static"
+                        label="Task Details"
+                        slotProps={{ inputLabel: { shrink: true } }}
+                        multiline
+                        rows={4}
+                        onChange={(event) => props.change(event)}
+                    />
+                </div>
+                <div>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        sx={{
+                            borderRadius: '50px',
+                            m: 1,
+                            p: 1,
+                            width: '95%',
+                            '&:hover': {
+                                transform: 'scale(1.05)',
+                            },
+                            '&:active': {
+                                transform: 'scale(0.95)',
+                                backgroundColor: 'success.main',
+                            },
+                        }}
+                    >
+                        <AddTaskIcon sx={{ pr: '8px' }} />
+                        Add Task
+                    </Button>
+                </div>
+
+            </Box>
+            {/* <form onSubmit={props.submit}>
+                <label>
+                    Task title:
+                    <input type="text" name="title" onChange={(event) => props.change(event)} required />
+                </label>
+                <br />
+                <label>
+                    Due date:
+                    <input type="date" name="deadline" onChange={(event) => props.change(event)} required />
+                </label>
+                <br />
+                <label>
+                    Details:
+                    <input type="text" name="description" onChange={(event) => props.change(event)} />
+                </label>
+                <br />
+                <label>
+                    Priority:
+                    <select name="priority" defaultValue="Medium" onChange={(event) => props.change(event)}>
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                    </select>
+                </label>
+
+                <input type="submit" value="Submit" />
+            </form> */}
+        </div>
+    )
+}
+
+export default AddTaskForm;
