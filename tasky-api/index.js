@@ -4,6 +4,7 @@ import tasksRouter from './api/tasks';
 import './db';
 import cors from 'cors';
 import usersRouter from './api/users';
+import authenticate from './authenticate';
 
 dotenv.config();
 
@@ -28,7 +29,9 @@ app.use(express.static('public'));
 
 app.use(express.json());
 
-app.use('/api/tasks', tasksRouter);
+// We add a “catch all” route BEFORE all the other routes. This means that any type of request coming in to 
+// /api/tasks/… will pass through the authenticate controller and will be checked for a valid JWT token.
+app.use('/api/tasks', authenticate, tasksRouter);
 
 // Users router
 app.use('/api/users', usersRouter);
