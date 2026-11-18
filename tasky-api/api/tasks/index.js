@@ -5,8 +5,17 @@ import asyncHandler from 'express-async-handler';
 const router = express.Router(); // eslint-disable-line
 
 // Get all tasks
+// When this endpoint is called, the populate('userId', 'username') uses the'userId' field to look up the 
+// User collection and replaces the userId field in each Task with the corresponding username from the user document.
 router.get('/', async (req, res) => {
-    const tasks = await Task.find();
+    const tasks = await Task.find().populate('userId', 'username'); 
+    res.status(200).json(tasks);
+});
+
+// Get a user's tasks
+// This function takes in a user id and finds the tasks that contain that user id.
+router.get('/user/:uid', async (req, res) => {
+    const tasks = await Task.find({ userId: `${req.params.uid}`});
     res.status(200).json(tasks);
 });
 
